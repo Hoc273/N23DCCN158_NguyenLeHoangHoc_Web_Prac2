@@ -42,12 +42,18 @@ const isValidTotalAmount = (items, totalAmount) => {
 router.get('/', async (req, res) => {
     try {
         const query = {};
+        const sortOrder = req.query.sort;
+        let sortQuery = { createdAt: -1 };
 
         if (req.query.status) {
             query.status = req.query.status;
         }
 
-        const orders = await Order.find(query).sort({ createdAt: -1 });
+        if (sortOrder === 'asc' || sortOrder === 'desc') {
+            sortQuery = { totalAmount: sortOrder === 'asc' ? 1 : -1 };
+        }
+
+        const orders = await Order.find(query).sort(sortQuery);
         return sendSuccess(res, 200, orders, 'Lay danh sach don hang thanh cong');
     } catch (err) {
         return sendError(res, 500, err.message);
