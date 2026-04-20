@@ -41,7 +41,13 @@ const isValidTotalAmount = (items, totalAmount) => {
 // 1. Lay toan bo don hang (GET /api/orders)
 router.get('/', async (req, res) => {
     try {
-        const orders = await Order.find().sort({ createdAt: -1 });
+        const query = {};
+
+        if (req.query.status) {
+            query.status = req.query.status;
+        }
+
+        const orders = await Order.find(query).sort({ createdAt: -1 });
         return sendSuccess(res, 200, orders, 'Lay danh sach don hang thanh cong');
     } catch (err) {
         return sendError(res, 500, err.message);
