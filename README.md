@@ -2,6 +2,10 @@
 
 Dự án backend quản lý đơn hàng sử dụng Node.js, Express và MongoDB (Mongoose).
 
+## Tác giả
+
+- Nguyễn Lê Hoàng Học - N23DCCN158
+
 ## Trạng thái hiện tại
 
 - Đã deploy thành công lên Render.com
@@ -132,7 +136,3 @@ Lưu ý validation:
 - dotenv
 - morgan
 - nodemon
-
-## Tác giả
-
-- Nguyễn Lê Hoàng Học
