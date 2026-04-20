@@ -53,6 +53,25 @@ router.get('/', async (req, res) => {
         return sendError(res, 500, err.message);
     }
 });
+// 2. Tim kiem don hang theo ten khach hang (GET /api/orders/search?name=...)
+router.get('/search', async (req, res) => {
+    try {
+        const keyword = req.query.name;
+
+        if (!keyword) {
+            return sendError(res, 400, 'Vui long truyen query name de tim kiem');
+        }
+
+        const orders = await Order.find({
+            customerName: { $regex: keyword, $options: 'i' }
+        }).sort({ createdAt: -1 });
+
+        return sendSuccess(res, 200, orders, 'Tim kiem don hang thanh cong');
+    } catch (err) {
+        return sendError(res, 500, err.message);
+    }
+});
+
 // 2. Lay don hang theo ID (GET /api/orders/:id)
 router.get('/:id', async (req, res) => {
     try {
